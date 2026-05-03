@@ -1,0 +1,80 @@
+/*
+  This file controls the browser page around the game.
+  The 3D world is drawn by JavaScript, but CSS makes the page fill the screen.
+*/
+
+* {
+  /* Width and height include padding and borders, which keeps layout easier. */
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  /* The app should use the whole browser window, like a game screen. */
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: lightblue;
+
+  /* Stop the browser from selecting text while the player clicks and drags. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  /* The page should not scroll while the player moves around the game. */
+  overflow: hidden;
+}
+
+body {
+  /* Keep the page fixed in place so mobile browsers do not bounce-scroll it. */
+  position: fixed;
+  overflow: hidden;
+  overscroll-behavior-y: none;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+    helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  color: black;
+}
+
+canvas {
+  /* The browser cursor is hidden by pointer lock. The center crosshair is visible instead. */
+  cursor: none;
+}
+
+.crosshair {
+  /* This is the visible "mouse" for building. It always stays in the center. */
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: '';
+  position: absolute;
+  background: white;
+  box-shadow: 0 0 2px black;
+}
+
+.crosshair::before {
+  left: 8px;
+  top: 0;
+  width: 2px;
+  height: 18px;
+}
+
+.crosshair::after {
+  left: 0;
+  top: 8px;
+  width: 18px;
+  height: 2px;
+}
