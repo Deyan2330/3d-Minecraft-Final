@@ -30,7 +30,7 @@ export const Player = props => {
   const [ref, api] = useSphere(() => ({
     mass: 1,
     type: 'Dynamic',
-    position: [0, 15, 0], // Spawn above terrain
+    position: [0, 10, 0], // Spawn above terrain, will fall down
     ...props
   }));
 

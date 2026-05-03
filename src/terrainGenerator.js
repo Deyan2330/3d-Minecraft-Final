@@ -54,6 +54,7 @@ const getBlockType = (y, surfaceY) => {
 };
 
 // Generate terrain cubes for a given area
+// Only generates surface layer for performance (like Minecraft's visible blocks)
 export const generateTerrain = (size = 16, centerX = 0, centerZ = 0) => {
   const cubes = [];
   const halfSize = Math.floor(size / 2);
@@ -62,10 +63,9 @@ export const generateTerrain = (size = 16, centerX = 0, centerZ = 0) => {
     for (let z = centerZ - halfSize; z < centerZ + halfSize; z++) {
       const surfaceY = getHeight(x, z);
       
-      // Generate blocks from bedrock up to surface
-      const minY = -2; // Bedrock level
-      
-      for (let y = minY; y <= surfaceY; y++) {
+      // Only generate top 3 layers for performance (grass, dirt, dirt)
+      // This is like Minecraft where you only see the surface
+      for (let y = surfaceY - 2; y <= surfaceY; y++) {
         const blockType = getBlockType(y, surfaceY);
         cubes.push({
           id: `terrain-${x}-${y}-${z}`,

@@ -8,7 +8,7 @@ export const Ground = props => {
   // Position it below the terrain as bedrock level
   const [ref] = usePlane(() => ({ 
     rotation: [-Math.PI / 2, 0, 0], 
-    position: [0, -3, 0], // Below terrain
+    position: [0, -2.5, 0], // Below terrain at bedrock level
     ...props 
   }));
   const { registerTarget } = useBlockTargetRegistry();

@@ -16,6 +16,7 @@ const CubeComponent = props => {
   // useBox gives this block a physics shape. Static means it does not fall.
   const [ref] = useBox(() => ({
     type: 'Static',
+    args: [1, 1, 1], // Size of the box
     ...boxProps
   }));
 
