@@ -4,6 +4,7 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { nanoid } from 'nanoid';
 
 import { $cubes } from './state';
+import { playPlaceSound, playBreakSound } from './useSounds';
 
 // Components call this when they need to know which cubes exist right now.
 export const useCube = () => useRecoilValue($cubes);
@@ -14,7 +15,7 @@ const hasSamePosition = (cube, position) =>
 
 export const useSetCube = () => {
   const setCubes = useSetRecoilState($cubes);
-  return (x, y, z) => {
+  return (x, y, z, blockType = 'dirt') => {
     const position = [x, y, z];
 
     setCubes(cubes => {
@@ -22,7 +23,8 @@ export const useSetCube = () => {
         return cubes;
       }
 
-      return [...cubes, { id: nanoid(), position }];
+      playPlaceSound();
+      return [...cubes, { id: nanoid(), position, blockType }];
     });
   };
 };
@@ -37,6 +39,7 @@ export const useRemoveCube = () => {
         return cubes;
       }
 
+      playBreakSound();
       return cubes.filter(cube => cube.id !== id);
     });
 };

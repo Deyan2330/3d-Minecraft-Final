@@ -1,15 +1,8 @@
 // Ground.js creates the floor the player can stand on.
 import React from 'react';
 import { usePlane } from '@react-three/cannon';
-import { TextureLoader, RepeatWrapping } from 'three';
-import grass from './grass.jpg';
 import { useBlockTargetRegistry } from './BlockTargetRegistry';
-
-// Load the grass image once. The ground does not need a new texture every render.
-const grassTexture = new TextureLoader().load(grass);
-grassTexture.wrapS = RepeatWrapping;
-grassTexture.wrapT = RepeatWrapping;
-grassTexture.repeat.set(240, 240);
+import { groundTexture } from './textures';
 
 export const Ground = props => {
   // A plane is like a flat sheet of paper. Rotating it makes it lie flat as the floor.
@@ -31,7 +24,7 @@ export const Ground = props => {
   return (
     <mesh ref={ref} receiveShadow>
       <planeBufferGeometry attach="geometry" args={[1009, 1000]} />
-      <meshStandardMaterial map={grassTexture} attach="material" color="green" />
+      <meshStandardMaterial map={groundTexture} attach="material" color="#2d5a1d" />
     </mesh>
   );
 };

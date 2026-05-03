@@ -1,20 +1,17 @@
 // Cube.js describes one block in the world.
 // A cube can be looked at, clicked to place another cube, or right-clicked to break it.
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { useBox } from '@react-three/cannon';
-
-import dirt from './dirt.jpg';
-import { TextureLoader } from 'three';
 import { useBlockTargetRegistry } from './BlockTargetRegistry';
-
-// Load the dirt image one time and reuse it for every cube.
-// Loading it inside Cube would reload it when blocks are added, which can flicker.
-const dirtTexture = new TextureLoader().load(dirt);
+import { BLOCK_TYPES } from './textures';
 
 const CubeComponent = props => {
-  const { id, ...boxProps } = props;
+  const { id, blockType = 'dirt', ...boxProps } = props;
   const { registerTarget } = useBlockTargetRegistry();
+
+  // Get the block configuration
+  const blockConfig = useMemo(() => BLOCK_TYPES[blockType] || BLOCK_TYPES.dirt, [blockType]);
 
   // useBox gives this block a physics shape. Static means it does not fall.
   const [ref] = useBox(() => ({
@@ -36,15 +33,21 @@ const CubeComponent = props => {
   }, [id, ref, registerTarget]);
 
   return (
-    <mesh ref={ref}>
-      {[...Array(6)].map((_, index) => (
-        <meshStandardMaterial
-          attachArray="material"
-          map={dirtTexture}
-          key={index}
-          color="white"
-        />
-      ))}
+    <mesh ref={ref} castShadow receiveShadow>
+      {blockConfig.useTexture && blockConfig.texture ? (
+        // Use texture for blocks that have one
+        [...Array(6)].map((_, index) => (
+          <meshStandardMaterial
+            attachArray="material"
+            map={blockConfig.texture}
+            key={index}
+            color="white"
+          />
+        ))
+      ) : (
+        // Use solid color for blocks without texture
+        <meshStandardMaterial color={blockConfig.color} roughness={0.8} metalness={0.1} />
+      )}
       <boxBufferGeometry attach="geometry" />
     </mesh>
   );

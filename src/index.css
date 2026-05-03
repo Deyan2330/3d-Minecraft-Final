@@ -16,7 +16,7 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: lightblue;
+  background: linear-gradient(to bottom, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
 
   /* Stop the browser from selecting text while the player clicks and drags. */
   -webkit-touch-callout: none;
@@ -50,8 +50,8 @@ canvas {
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 10;
@@ -61,20 +61,21 @@ canvas {
 .crosshair::after {
   content: '';
   position: absolute;
-  background: white;
-  box-shadow: 0 0 2px black;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 0, 0, 0.4);
+  border-radius: 1px;
 }
 
 .crosshair::before {
-  left: 8px;
-  top: 0;
+  left: 11px;
+  top: 2px;
   width: 2px;
-  height: 18px;
+  height: 20px;
 }
 
 .crosshair::after {
-  left: 0;
-  top: 8px;
-  width: 18px;
+  left: 2px;
+  top: 11px;
+  width: 20px;
   height: 2px;
 }

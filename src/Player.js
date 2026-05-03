@@ -7,7 +7,8 @@ import { PointerLockControls } from './PointerLockControls';
 import { usePlayerControls } from './usePlayerControls';
 import { Vector3 } from 'three';
 
-const SPEED = 5;
+const WALK_SPEED = 5;
+const SPRINT_SPEED = 10;
 const JUMP_FORCE = 10;
 const UP = new Vector3(0, 1, 0);
 
@@ -23,7 +24,8 @@ export const Player = props => {
     moveBackward,
     moveLeft,
     moveRight,
-    jump
+    jump,
+    sprint,
   } = usePlayerControls();
   const [ref, api] = useSphere(() => ({
     mass: 1,
@@ -68,7 +70,8 @@ export const Player = props => {
     if (moveLeft) direction.sub(right);
 
     if (direction.lengthSq() > 0) {
-      direction.normalize().multiplyScalar(SPEED);
+      const speed = sprint ? SPRINT_SPEED : WALK_SPEED;
+      direction.normalize().multiplyScalar(speed);
     }
 
     // Keep the falling/jumping speed from physics, but replace floor movement.

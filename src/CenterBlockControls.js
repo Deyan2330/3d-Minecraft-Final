@@ -18,7 +18,7 @@ const snapToBlockGrid = value => Math.round(value);
 const snapToCubeHeight = value =>
   Math.round(value - CUBE_CENTER_Y) + CUBE_CENTER_Y;
 
-export const CenterBlockControls = () => {
+export const CenterBlockControls = ({ selectedBlockType }) => {
   const { camera, gl } = useThree();
   const addCube = useSetCube();
   const removeCube = useRemoveCube();
@@ -51,10 +51,11 @@ export const CenterBlockControls = () => {
       addCube(
         snapToBlockGrid(hit.point.x),
         CUBE_CENTER_Y,
-        snapToBlockGrid(hit.point.z)
+        snapToBlockGrid(hit.point.z),
+        selectedBlockType
       );
     },
-    [addCube]
+    [addCube, selectedBlockType]
   );
 
   const placeCubeNextToBlock = useCallback(
@@ -70,10 +71,11 @@ export const CenterBlockControls = () => {
       addCube(
         snapToBlockGrid(cubePosition.x + hit.face.normal.x),
         snapToCubeHeight(cubePosition.y + hit.face.normal.y),
-        snapToBlockGrid(cubePosition.z + hit.face.normal.z)
+        snapToBlockGrid(cubePosition.z + hit.face.normal.z),
+        selectedBlockType
       );
     },
-    [addCube, cubePosition]
+    [addCube, cubePosition, selectedBlockType]
   );
 
   const handleMouseDown = useCallback(

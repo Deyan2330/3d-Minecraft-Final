@@ -21,7 +21,10 @@ const MOVEMENT_BY_KEY = {
   d: 'moveRight',
   D: 'moveRight',
   Space: 'jump',
-  ' ': 'jump'
+  ' ': 'jump',
+  ShiftLeft: 'sprint',
+  ShiftRight: 'sprint',
+  Shift: 'sprint',
 };
 
 const getMovementByEvent = event =>
@@ -34,7 +37,8 @@ export const usePlayerControls = () => {
     moveBackward: false,
     moveLeft: false,
     moveRight: false,
-    jump: false
+    jump: false,
+    sprint: false,
   });
 
   useEffect(() => {
