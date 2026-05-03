@@ -14,7 +14,7 @@
     "react-merge-refs": "1.1.0",
     "react-scripts": "^4.0.3",
     "react-three-fiber": "^6.0.13",
-    "recoil": "0.0.10",
+    "recoil": "^0.7.7",
     "three": "^0.129.0"
   },
   "scripts": {
